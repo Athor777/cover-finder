@@ -28,9 +28,7 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
 }
-body {
-  padding-bottom: 80px;
-}
+body { padding-bottom: 80px; }
 
 .header {
   background: linear-gradient(180deg, #15151a 0%, #0e0e10 100%);
@@ -125,122 +123,165 @@ body {
   border-color: var(--red);
 }
 
-.grid {
+.games {
   max-width: 1200px;
   margin: 0 auto;
   padding: 18px 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px;
-}
-.card {
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  transition: border-color 0.15s, transform 0.15s;
+  gap: 22px;
+}
+
+/* ---- Sezione gioco con palette tematica ---- */
+.game {
+  --g-bg: #17171a;
+  --g-accent: #c8252b;
+  --g-accent-2: #d4a64a;
+  --g-line: rgba(255,255,255,0.08);
+  --g-glow: rgba(200,37,43,0.18);
+  background:
+    radial-gradient(120% 60% at 0% 0%, var(--g-glow), transparent 60%),
+    var(--g-bg);
+  border: 1px solid var(--g-line);
+  border-radius: 16px;
+  padding: 22px;
   position: relative;
   overflow: hidden;
 }
-.card:hover { border-color: #3a3a42; }
-.card[data-status="done"] { opacity: 0.55; }
-.card[data-status="done"]::before {
+.game::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: var(--green);
-}
-.card[data-status="wip"]::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--gold);
+  background: linear-gradient(90deg, var(--g-accent), var(--g-accent-2));
 }
 
-.card-meta {
+.game-header {
   display: flex;
-  gap: 8px;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
+  margin-bottom: 18px;
 }
-.badge {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-weight: 700;
-}
-.badge-year {
-  background: var(--red-dim);
+.game-titles { min-width: 0; flex: 1; }
+.game-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
   color: #fff;
 }
-.card-title {
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.3px;
-}
-.card-source {
+.game-meta {
   font-size: 13px;
   color: var(--text-dim);
+  margin-top: 4px;
 }
-.card-source strong { color: var(--text); font-weight: 600; }
-.card-actions {
+.game-meta .dot { margin: 0 6px; opacity: 0.5; }
+.game-progress {
   display: flex;
-  gap: 8px;
-  margin-top: 6px;
-  flex-wrap: wrap;
-}
-.btn {
-  flex: 1;
-  min-width: 0;
-  padding: 9px 12px;
-  border-radius: 8px;
+  align-items: center;
+  gap: 10px;
   font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid var(--line);
-  background: var(--bg-3);
-  color: var(--text);
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.15s;
-  display: inline-flex;
+  color: var(--text-dim);
+}
+.progress-bar {
+  width: 120px;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--g-accent), var(--g-accent-2));
+  transition: width 0.3s;
+}
+
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.track {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--g-line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: border-color 0.15s, background 0.15s;
+}
+.track:hover { border-color: var(--g-accent); }
+.track[data-status="done"] { opacity: 0.55; }
+.track[data-status="done"] .track-rank { background: var(--green); color: #0a0a0a; }
+.track[data-status="wip"] .track-rank { background: var(--g-accent-2); color: #0a0a0a; }
+
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.track-rank {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--g-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
   align-items: center;
   justify-content: center;
+  letter-spacing: -0.3px;
+}
+.track-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+}
+.track-actions {
+  display: flex;
   gap: 6px;
-  white-space: nowrap;
 }
-.btn:hover { border-color: var(--red); color: #fff; }
-.btn-yt {
-  background: #ff0000;
-  border-color: #ff0000;
-  color: #fff;
-}
-.btn-yt:hover { background: #cc0000; border-color: #cc0000; color: #fff; }
-
 .status-select {
   flex: 1;
-  background: var(--bg-3);
+  background: rgba(255,255,255,0.04);
   color: var(--text);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 9px 10px;
-  font-size: 12px;
+  border: 1px solid var(--g-line);
+  border-radius: 7px;
+  padding: 7px 8px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
   outline: none;
   font-family: inherit;
 }
+.btn-yt {
+  background: #ff0000;
+  border: 1px solid #ff0000;
+  color: #fff;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.btn-yt:hover { background: #cc0000; }
 
 .empty {
-  grid-column: 1 / -1;
   text-align: center;
   padding: 60px 20px;
   color: var(--text-dim);
@@ -252,8 +293,10 @@ body {
   .logo { font-size: 19px; }
   .tag { font-size: 10px; }
   .controls { padding: 14px 16px 4px; }
-  .grid { padding: 14px 16px; gap: 12px; grid-template-columns: 1fr; }
-  .card { padding: 14px; }
+  .games { padding: 14px 16px; gap: 16px; }
+  .game { padding: 16px; }
+  .game-title { font-size: 18px; }
+  .track-grid { grid-template-columns: 1fr; }
   .stats { font-size: 12px; gap: 10px; }
   .filter-label { width: 100%; margin-bottom: 2px; }
 }
@@ -270,17 +313,17 @@ body {
 </div>
 
 <div class="controls">
-  <input type="text" class="search" id="search" placeholder="Cerca un brano o un gioco...">
+  <input type="text" class="search" id="search" placeholder="Cerca un gioco o un brano...">
 
   <div class="filter-group" id="dec-filter">
     <span class="filter-label">Decennio</span>
     <button class="chip active" data-dec="all">Tutti</button>
-    <button class="chip" data-dec="70">Anni 70</button>
-    <button class="chip" data-dec="80">Anni 80</button>
-    <button class="chip" data-dec="90">Anni 90</button>
-    <button class="chip" data-dec="00">Anni 2000</button>
-    <button class="chip" data-dec="10">Anni 2010</button>
-    <button class="chip" data-dec="20">Anni 2020</button>
+    <button class="chip" data-dec="70">70</button>
+    <button class="chip" data-dec="80">80</button>
+    <button class="chip" data-dec="90">90</button>
+    <button class="chip" data-dec="00">2000</button>
+    <button class="chip" data-dec="10">2010</button>
+    <button class="chip" data-dec="20">2020</button>
   </div>
 
   <div class="filter-group" id="stat-filter">
@@ -292,229 +335,58 @@ body {
   </div>
 </div>
 
-<div class="grid" id="grid"></div>
+<div class="games" id="games"></div>
 
 <script>
-const TRACKS = [
-  // ===== ANNI 70 =====
-  { title:'Main Theme', source:'Space Invaders', year:1978, by:'Tomohiro Nishikado' },
-  { title:'Main Theme', source:'Asteroids', year:1979, by:'Atari Sound Team' },
-  { title:'Theme', source:'Galaxian', year:1979, by:'Namco' },
-  { title:'Background Music', source:'Lunar Rescue', year:1979, by:'Taito' },
+/* ============================================================
+   COVER FINDER — vista per gioco
+   Aggiungere un gioco = aggiungere un oggetto a GAMES qui sotto.
+   I colori `palette` definiscono la palette tematica della sezione.
+   Le tracce sono in ordine di popolarità (dalla più streamata).
+   ============================================================ */
 
-  // ===== ANNI 80 =====
-  { title:'Main Theme', source:'Pac-Man', year:1980, by:'Toshio Kai' },
-  { title:'Stage Theme', source:'Donkey Kong', year:1981, by:'Yukio Kaneoka' },
-  { title:'Main Theme', source:'Dragon’s Lair', year:1983, by:'Christopher Stone' },
-  { title:'Overworld Theme', source:'Super Mario Bros.', year:1985, by:'Koji Kondo' },
-  { title:'Underworld Theme', source:'Super Mario Bros.', year:1985, by:'Koji Kondo' },
-  { title:'Underwater Theme', source:'Super Mario Bros.', year:1985, by:'Koji Kondo' },
-  { title:'Main Theme', source:'The Legend of Zelda', year:1986, by:'Koji Kondo' },
-  { title:'Brinstar Theme', source:'Metroid', year:1986, by:'Hirokazu Tanaka' },
-  { title:'Vampire Killer', source:'Castlevania', year:1986, by:'Kinuyo Yamashita' },
-  { title:'Wicked Child', source:'Castlevania', year:1986, by:'Kinuyo Yamashita' },
-  { title:'Bloody Tears', source:'Castlevania II', year:1987, by:'Kenichi Matsubara' },
-  { title:'Main Theme', source:'Bubble Bobble', year:1986, by:'Tadashi Kimijima' },
-  { title:'Magical Sound Shower', source:'Out Run', year:1986, by:'Hiroshi Kawaguchi' },
-  { title:'Splash Wave', source:'Out Run', year:1986, by:'Hiroshi Kawaguchi' },
-  { title:'Overture', source:'Dragon Quest', year:1986, by:'Koichi Sugiyama' },
-  { title:'Prelude', source:'Final Fantasy', year:1987, by:'Nobuo Uematsu' },
-  { title:'Main Theme', source:'Final Fantasy', year:1987, by:'Nobuo Uematsu' },
-  { title:'Title Theme', source:'Punch-Out!!', year:1987, by:'Yukio Kaneoka' },
-  { title:'Phantasy Star Theme', source:'Phantasy Star', year:1987, by:'Tokuhiko Uwabo' },
-  { title:'Jungle Theme', source:'Contra', year:1987, by:'Hidenori Maezawa' },
-  { title:'Act I-1', source:'Ninja Gaiden', year:1988, by:'Keiji Yamagishi' },
-  { title:'Dr. Wily Stage 1', source:'Mega Man 2', year:1988, by:'Takashi Tateishi' },
-  { title:'Air Man Stage', source:'Mega Man 2', year:1988, by:'Takashi Tateishi' },
-  { title:'Wood Man Stage', source:'Mega Man 2', year:1988, by:'Takashi Tateishi' },
-  { title:'Korobeiniki (Theme A)', source:'Tetris', year:1989, by:'Hirokazu Tanaka' },
-  { title:'The Moon Theme', source:'DuckTales', year:1989, by:'Hiroshige Tonomura' },
-  { title:'Beginning', source:'Castlevania III', year:1989, by:'Konami Kukeiha Club' },
-  { title:'Eight Melodies', source:'Mother', year:1989, by:'Keiichi Suzuki' },
-
-  // ===== ANNI 90 =====
-  { title:'Mute City', source:'F-Zero', year:1990, by:'Yumiko Kanki / Naoto Ishida' },
-  { title:'Big Blue', source:'F-Zero', year:1990, by:'Yumiko Kanki / Naoto Ishida' },
-  { title:'Theme of Love', source:'Final Fantasy IV', year:1991, by:'Nobuo Uematsu' },
-  { title:'Battle With the Four Fiends', source:'Final Fantasy IV', year:1991, by:'Nobuo Uematsu' },
-  { title:'Green Hill Zone', source:'Sonic the Hedgehog', year:1991, by:'Masato Nakamura' },
-  { title:'Star Light Zone', source:'Sonic the Hedgehog', year:1991, by:'Masato Nakamura' },
-  { title:'Guile’s Theme', source:'Street Fighter II', year:1991, by:'Yoko Shimomura' },
-  { title:'Ryu’s Theme', source:'Street Fighter II', year:1991, by:'Yoko Shimomura' },
-  { title:'Fighting in the Street', source:'Streets of Rage', year:1991, by:'Yuzo Koshiro' },
-  { title:'Chemical Plant Zone', source:'Sonic 2', year:1992, by:'Masato Nakamura' },
-  { title:'Go Straight', source:'Streets of Rage 2', year:1992, by:'Yuzo Koshiro' },
-  { title:'Theme', source:'Mortal Kombat', year:1992, by:'Dan Forden' },
-  { title:'Battle 1', source:'Final Fantasy V', year:1992, by:'Nobuo Uematsu' },
-  { title:'Fear of the Heavens', source:'Secret of Mana', year:1993, by:'Hiroki Kikuta' },
-  { title:'At Doom’s Gate (E1M1)', source:'Doom', year:1993, by:'Bobby Prince' },
-  { title:'Storm Eagle', source:'Mega Man X', year:1993, by:'Setsuo Yamamoto' },
-  { title:'Spark Mandrill', source:'Mega Man X', year:1993, by:'Setsuo Yamamoto' },
-  { title:'Terra’s Theme', source:'Final Fantasy VI', year:1994, by:'Nobuo Uematsu' },
-  { title:'Dancing Mad', source:'Final Fantasy VI', year:1994, by:'Nobuo Uematsu' },
-  { title:'Aquatic Ambience', source:'Donkey Kong Country', year:1994, by:'David Wise' },
-  { title:'DK Island Swing', source:'Donkey Kong Country', year:1994, by:'David Wise' },
-  { title:'Theme of Super Metroid', source:'Super Metroid', year:1994, by:'Kenji Yamamoto' },
-  { title:'Lower Brinstar', source:'Super Metroid', year:1994, by:'Kenji Yamamoto' },
-  { title:'Eight Melodies', source:'EarthBound', year:1994, by:'Keiichi Suzuki' },
-  { title:'Main Theme', source:'Chrono Trigger', year:1995, by:'Yasunori Mitsuda' },
-  { title:'Frog’s Theme', source:'Chrono Trigger', year:1995, by:'Yasunori Mitsuda' },
-  { title:'Schala’s Theme', source:'Chrono Trigger', year:1995, by:'Yasunori Mitsuda' },
-  { title:'Stickerbrush Symphony', source:'Donkey Kong Country 2', year:1995, by:'David Wise' },
-  { title:'Save Room Theme', source:'Resident Evil', year:1996, by:'Makoto Tomozawa' },
-  { title:'Bob-omb Battlefield', source:'Super Mario 64', year:1996, by:'Koji Kondo' },
-  { title:'Dire, Dire Docks', source:'Super Mario 64', year:1996, by:'Koji Kondo' },
-  { title:'Battle! Wild Pokémon', source:'Pokémon Red/Blue', year:1996, by:'Junichi Masuda' },
-  { title:'Lavender Town', source:'Pokémon Red/Blue', year:1996, by:'Junichi Masuda' },
-  { title:'Main Theme', source:'Tomb Raider', year:1996, by:'Nathan McCree' },
-  { title:'Tristram', source:'Diablo', year:1996, by:'Matt Uelmen' },
-  { title:'Main Theme', source:'Quake', year:1996, by:'Trent Reznor' },
-  { title:'One-Winged Angel', source:'Final Fantasy VII', year:1997, by:'Nobuo Uematsu' },
-  { title:'Aerith’s Theme', source:'Final Fantasy VII', year:1997, by:'Nobuo Uematsu' },
-  { title:'Main Theme', source:'Final Fantasy VII', year:1997, by:'Nobuo Uematsu' },
-  { title:'Cosmo Canyon', source:'Final Fantasy VII', year:1997, by:'Nobuo Uematsu' },
-  { title:'Dracula’s Castle', source:'Castlevania: Symphony of the Night', year:1997, by:'Michiru Yamane' },
-  { title:'Tragic Prince', source:'Castlevania: Symphony of the Night', year:1997, by:'Michiru Yamane' },
-  { title:'Facility', source:'GoldenEye 007', year:1997, by:'Grant Kirkhope' },
-  { title:'Main Theme', source:'Metal Gear Solid', year:1998, by:'Tappi Iwase' },
-  { title:'Encounter', source:'Metal Gear Solid', year:1998, by:'KCEJ Sound Team' },
-  { title:'Song of Storms', source:'Zelda: Ocarina of Time', year:1998, by:'Koji Kondo' },
-  { title:'Hyrule Field', source:'Zelda: Ocarina of Time', year:1998, by:'Koji Kondo' },
-  { title:'Saria’s Song (Lost Woods)', source:'Zelda: Ocarina of Time', year:1998, by:'Koji Kondo' },
-  { title:'Gerudo Valley', source:'Zelda: Ocarina of Time', year:1998, by:'Koji Kondo' },
-  { title:'Spiral Mountain', source:'Banjo-Kazooie', year:1998, by:'Grant Kirkhope' },
-  { title:'Terran Theme 1', source:'StarCraft', year:1998, by:'Glenn Stafford' },
-  { title:'Liberi Fatali', source:'Final Fantasy VIII', year:1999, by:'Nobuo Uematsu' },
-  { title:'Eyes on Me', source:'Final Fantasy VIII', year:1999, by:'Nobuo Uematsu' },
-  { title:'Theme of Laura', source:'Silent Hill', year:1999, by:'Akira Yamaoka' },
-  { title:'Promise (Reprise)', source:'Silent Hill', year:1999, by:'Akira Yamaoka' },
-  { title:'Scars of Time', source:'Chrono Cross', year:1999, by:'Yasunori Mitsuda' },
-
-  // ===== ANNI 2000 =====
-  { title:'Clock Town (Day 1)', source:'Zelda: Majora’s Mask', year:2000, by:'Koji Kondo' },
-  { title:'Stone Tower Temple', source:'Zelda: Majora’s Mask', year:2000, by:'Koji Kondo' },
-  { title:'Main Theme', source:'Halo', year:2001, by:'Marty O’Donnell' },
-  { title:'To Zanarkand', source:'Final Fantasy X', year:2001, by:'Nobuo Uematsu' },
-  { title:'Suteki Da Ne', source:'Final Fantasy X', year:2001, by:'Nobuo Uematsu' },
-  { title:'You Were There', source:'Ico', year:2001, by:'Michiru Oshima' },
-  { title:'Main Theme', source:'Super Smash Bros. Melee', year:2001, by:'Hirokazu Ando' },
-  { title:'Pursuit', source:'Phoenix Wright: Ace Attorney', year:2001, by:'Masakazu Sugimori' },
-  { title:'Theme', source:'GTA Vice City', year:2002, by:'Rockstar' },
-  { title:'Dearly Beloved', source:'Kingdom Hearts', year:2002, by:'Yoko Shimomura' },
-  { title:'Hikari', source:'Kingdom Hearts', year:2002, by:'Utada Hikaru' },
-  { title:'Animal Crossing Theme', source:'Animal Crossing', year:2002, by:'Kazumi Totaka' },
-  { title:'Trainer Battle', source:'Pokémon Ruby/Sapphire', year:2002, by:'Go Ichinose' },
-  { title:'Devils Never Cry', source:'Devil May Cry 3', year:2005, by:'Tetsuya Shibata' },
-  { title:'Starry Heavens', source:'Tales of Symphonia', year:2003, by:'Motoi Sakuraba' },
-  { title:'Mjolnir Mix', source:'Halo 2', year:2004, by:'Marty O’Donnell' },
-  { title:'Triage at Dawn', source:'Half-Life 2', year:2004, by:'Kelly Bailey' },
-  { title:'Main Theme', source:'World of Warcraft', year:2004, by:'Jason Hayes' },
-  { title:'Stormwind', source:'World of Warcraft', year:2004, by:'Jason Hayes' },
-  { title:'Theme', source:'GTA San Andreas', year:2004, by:'Rockstar' },
-  { title:'Snake Eater', source:'Metal Gear Solid 3', year:2004, by:'Norihiko Hibino' },
-  { title:'Main Theme', source:'God of War', year:2005, by:'Gerard Marino' },
-  { title:'Revived Power', source:'Shadow of the Colossus', year:2005, by:'Kow Otani' },
-  { title:'The Opened Way', source:'Shadow of the Colossus', year:2005, by:'Kow Otani' },
-  { title:'Sanctuary', source:'Kingdom Hearts II', year:2005, by:'Utada Hikaru' },
-  { title:'Reset', source:'Okami', year:2006, by:'Masami Ueda' },
-  { title:'Theme of the Empire', source:'Final Fantasy XII', year:2006, by:'Hitoshi Sakimoto' },
-  { title:'Burn My Dread', source:'Persona 3', year:2006, by:'Shoji Meguro' },
-  { title:'Wii Shop Channel', source:'Wii', year:2006, by:'Kazumi Totaka' },
-  { title:'Wii Sports Theme', source:'Wii Sports', year:2006, by:'Kazumi Totaka' },
-  { title:'Main Theme', source:'Oblivion', year:2006, by:'Jeremy Soule' },
-  { title:'Vigil', source:'Mass Effect', year:2007, by:'Jack Wall' },
-  { title:'Welcome to Rapture', source:'Bioshock', year:2007, by:'Garry Schyman' },
-  { title:'Still Alive', source:'Portal', year:2007, by:'Jonathan Coulton' },
-  { title:'Never Forget', source:'Halo 3', year:2007, by:'Marty O’Donnell' },
-  { title:'Gusty Garden Galaxy', source:'Super Mario Galaxy', year:2007, by:'Mahito Yokota' },
-  { title:'Reach Out to the Truth', source:'Persona 4', year:2008, by:'Shoji Meguro' },
-  { title:'Main Theme', source:'Super Smash Bros. Brawl', year:2008, by:'Nobuo Uematsu' },
-  { title:'Old Snake', source:'Metal Gear Solid 4', year:2008, by:'Harry Gregson-Williams' },
-
-  // ===== ANNI 2010 =====
-  { title:'Gaur Plain', source:'Xenoblade Chronicles', year:2010, by:'ACE+' },
-  { title:'Answers', source:'Final Fantasy XIV', year:2010, by:'Nobuo Uematsu' },
-  { title:'Dragonborn', source:'Skyrim', year:2011, by:'Jeremy Soule' },
-  { title:'Far Horizons', source:'Skyrim', year:2011, by:'Jeremy Soule' },
-  { title:'Streets of Whiterun', source:'Skyrim', year:2011, by:'Jeremy Soule' },
-  { title:'Gwyn, Lord of Cinder', source:'Dark Souls', year:2011, by:'Motoi Sakuraba' },
-  { title:'Firelink Shrine', source:'Dark Souls', year:2011, by:'Motoi Sakuraba' },
-  { title:'Sweden', source:'Minecraft', year:2011, by:'C418' },
-  { title:'Wet Hands', source:'Minecraft', year:2011, by:'C418' },
-  { title:'Build that Wall', source:'Bastion', year:2011, by:'Darren Korb' },
-  { title:'Ballad of the Goddess', source:'Zelda: Skyward Sword', year:2011, by:'Hajime Wakai' },
-  { title:'An End, Once and For All', source:'Mass Effect 3', year:2012, by:'Sam Hulick' },
-  { title:'Apotheosis', source:'Journey', year:2012, by:'Austin Wintory' },
-  { title:'Nascence', source:'Journey', year:2012, by:'Austin Wintory' },
-  { title:'Hydrogen', source:'Hotline Miami', year:2012, by:'M.O.O.N.' },
-  { title:'Will the Circle Be Unbroken', source:'Bioshock Infinite', year:2013, by:'Garry Schyman' },
-  { title:'Main Theme', source:'The Last of Us', year:2013, by:'Gustavo Santaolalla' },
-  { title:'We All Become', source:'Transistor', year:2014, by:'Darren Korb' },
-  { title:'Geralt of Rivia', source:'The Witcher 3', year:2015, by:'Marcin Przybyłowicz' },
-  { title:'Ladies of the Woods', source:'The Witcher 3', year:2015, by:'Marcin Przybyłowicz' },
-  { title:'Silver for Monsters', source:'The Witcher 3', year:2015, by:'Marcin Przybyłowicz' },
-  { title:'Cleric Beast', source:'Bloodborne', year:2015, by:'Ryan Amon' },
-  { title:'Lady Maria', source:'Bloodborne', year:2015, by:'Ryan Amon' },
-  { title:'Megalovania', source:'Undertale', year:2015, by:'Toby Fox' },
-  { title:'Hopes and Dreams', source:'Undertale', year:2015, by:'Toby Fox' },
-  { title:'Spider Dance', source:'Undertale', year:2015, by:'Toby Fox' },
-  { title:'Calamari Inkantation', source:'Splatoon', year:2015, by:'Toru Minegishi' },
-  { title:'At Doom’s Gate', source:'DOOM (2016)', year:2016, by:'Mick Gordon' },
-  { title:'BFG Division', source:'DOOM (2016)', year:2016, by:'Mick Gordon' },
-  { title:'Last Surprise', source:'Persona 5', year:2016, by:'Shoji Meguro' },
-  { title:'Beneath the Mask', source:'Persona 5', year:2016, by:'Shoji Meguro' },
-  { title:'Life Will Change', source:'Persona 5', year:2016, by:'Shoji Meguro' },
-  { title:'Rivers in the Desert', source:'Persona 5', year:2016, by:'Shoji Meguro' },
-  { title:'Stardew Valley Theme', source:'Stardew Valley', year:2016, by:'ConcernedApe' },
-  { title:'Somnus', source:'Final Fantasy XV', year:2016, by:'Yoko Shimomura' },
-  { title:'Main Theme', source:'Zelda: Breath of the Wild', year:2017, by:'Manaka Kataoka' },
-  { title:'Hyrule Castle', source:'Zelda: Breath of the Wild', year:2017, by:'Yasuaki Iwata' },
-  { title:'Floral Fury', source:'Cuphead', year:2017, by:'Kristofer Maddigan' },
-  { title:'Don’t Deal with the Devil', source:'Cuphead', year:2017, by:'Kristofer Maddigan' },
-  { title:'Weight of the World', source:'NieR: Automata', year:2017, by:'Keiichi Okabe' },
-  { title:'A Beautiful Song', source:'NieR: Automata', year:2017, by:'Keiichi Okabe' },
-  { title:'Vague Hope', source:'NieR: Automata', year:2017, by:'Keiichi Okabe' },
-  { title:'Main Theme', source:'Hollow Knight', year:2017, by:'Christopher Larkin' },
-  { title:'City of Tears', source:'Hollow Knight', year:2017, by:'Christopher Larkin' },
-  { title:'Jump Up, Super Star!', source:'Super Mario Odyssey', year:2017, by:'Naoto Kubo' },
-  { title:'Resurrections', source:'Celeste', year:2018, by:'Lena Raine' },
-  { title:'Reach for the Summit', source:'Celeste', year:2018, by:'Lena Raine' },
-  { title:'Main Theme', source:'Octopath Traveler', year:2018, by:'Yasunori Nishiki' },
-  { title:'Main Theme', source:'Sekiro', year:2019, by:'Yuka Kitamura' },
-
-  // ===== ANNI 2020 =====
-  { title:'In the Blood', source:'Hades', year:2020, by:'Darren Korb' },
-  { title:'Good Riddance', source:'Hades', year:2020, by:'Darren Korb' },
-  { title:'Hollow', source:'Final Fantasy VII Remake', year:2020, by:'Nobuo Uematsu' },
-  { title:'Genshin Impact Main Theme', source:'Genshin Impact', year:2020, by:'Yu-Peng Chen' },
-  { title:'I Really Want to Stay at Your House', source:'Cyberpunk 2077', year:2020, by:'Rosa Walton' },
-  { title:'Never Fade Away', source:'Cyberpunk 2077', year:2020, by:'P.T. Adamczyk' },
-  { title:'Main Theme', source:'Resident Evil Village', year:2021, by:'Shusaku Uchiyama' },
-  { title:'The Final Battle', source:'Elden Ring', year:2022, by:'Tsukasa Saitoh' },
-  { title:'Malenia, Blade of Miquella', source:'Elden Ring', year:2022, by:'Shoi Miyazawa' },
-  { title:'Song of Lament', source:'Elden Ring', year:2022, by:'Yuka Kitamura' },
-  { title:'Main Theme', source:'Stray', year:2022, by:'Yann van der Cruyssen' },
-  { title:'Anarchy Rainbow', source:'Splatoon 3', year:2022, by:'Toru Minegishi' },
-  { title:'Main Theme', source:'Hi-Fi Rush', year:2023, by:'Shuichi Kobori' },
-  { title:'Find the Flame', source:'Final Fantasy XVI', year:2023, by:'Masayoshi Soken' },
-  { title:'Away', source:'Final Fantasy XVI', year:2023, by:'Masayoshi Soken' },
-  { title:'Main Theme', source:'Tears of the Kingdom', year:2023, by:'Manaka Kataoka' },
-  { title:'Down by the River', source:'Baldur’s Gate 3', year:2023, by:'Borislav Slavov' },
-  { title:'Solstice Shrine', source:'Sea of Stars', year:2023, by:'Eric W. Brown' },
-  { title:'Feel', source:'Lies of P', year:2023, by:'Yeji Yeon' },
-  { title:'Full Moon Full Life', source:'Persona 3 Reload', year:2024, by:'Atsushi Kitajoh' },
+const GAMES = [
+  {
+    id: 'zelda-oot',
+    title: 'The Legend of Zelda: Ocarina of Time',
+    year: 1998,
+    composer: 'Koji Kondo',
+    palette: {
+      bg: '#0f1a13',
+      accent: '#4caf6d',     // verde Link
+      accent2: '#e8c547',    // oro Triforce
+      line: 'rgba(76,175,109,0.22)',
+      glow: 'rgba(76,175,109,0.28)'
+    },
+    tracks: [
+      'Song of Storms',
+      'Gerudo Valley',
+      'Saria’s Song / Lost Woods',
+      'Song of Time',
+      'Zelda’s Lullaby',
+      'Hyrule Field Main Theme',
+      'Epona’s Song',
+      'Bolero of Fire',
+      'Forest Temple',
+      'Kakariko Village',
+      'Zora’s Domain',
+      'Sun’s Song',
+      'Serenade of Water',
+      'Great Fairy Fountain',
+      'Title Theme'
+    ]
+  }
 ];
 
-const STORAGE_KEY = 'coverFinderState_v2';
+const STORAGE_KEY = 'coverFinderState_v3';
 let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+let filters = { dec: 'all', stat: 'all', q: '' };
 
-let filters = { dec:'all', stat:'all', q:'' };
-
-function keyFor(t) { return `${t.source}|${t.title}`; }
-function statusOf(t) { return state[keyFor(t)] || 'todo'; }
-function setStatus(t, s) {
-  if (s === 'todo') delete state[keyFor(t)];
-  else state[keyFor(t)] = s;
+function trackKey(gameId, trackTitle) { return `${gameId}::${trackTitle}`; }
+function statusOf(gameId, trackTitle) { return state[trackKey(gameId, trackTitle)] || 'todo'; }
+function setStatus(gameId, trackTitle, s) {
+  if (s === 'todo') delete state[trackKey(gameId, trackTitle)];
+  else state[trackKey(gameId, trackTitle)] = s;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   render();
 }
@@ -529,77 +401,137 @@ function decadeOf(year) {
   return 'other';
 }
 
-function ytSearchUrl(t) {
-  const q = encodeURIComponent(`${t.source} ${t.title} ${t.by||''}`.trim());
+function ytSearchUrl(gameTitle, trackTitle, composer) {
+  const q = encodeURIComponent(`${gameTitle} ${trackTitle} ${composer || ''}`.trim());
   return `https://www.youtube.com/results?search_query=${q}`;
 }
 
-function visibleTracks() {
+function gameMatches(g) {
+  if (filters.dec !== 'all' && decadeOf(g.year) !== filters.dec) return false;
   const q = filters.q.toLowerCase().trim();
-  return TRACKS.filter(t => {
-    if (filters.dec !== 'all' && decadeOf(t.year) !== filters.dec) return false;
-    if (filters.stat !== 'all' && statusOf(t) !== filters.stat) return false;
-    if (q) {
-      const hay = `${t.title} ${t.source} ${t.by||''}`.toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    return true;
-  });
-}
 
-function render() {
-  const grid = document.getElementById('grid');
-  const list = visibleTracks();
-
-  const total = TRACKS.length;
-  const done = TRACKS.filter(t => statusOf(t) === 'done').length;
-  const wip = TRACKS.filter(t => statusOf(t) === 'wip').length;
-  const todo = total - done - wip;
-  document.getElementById('stats').innerHTML = `
-    <span class="stat"><strong>${total}</strong> brani totali</span>
-    <span class="stat"><strong>${todo}</strong> da fare</span>
-    <span class="stat"><strong>${wip}</strong> in corso</span>
-    <span class="stat"><strong>${done}</strong> pubblicate</span>
-    <span class="stat" style="margin-left:auto"><strong>${list.length}</strong> visibili</span>
-  `;
-
-  if (list.length === 0) {
-    grid.innerHTML = `<div class="empty"><h3>Nessun risultato</h3><p>Prova a cambiare filtri o cerca un altro titolo.</p></div>`;
-    return;
+  // Filtro per stato: il gioco è visibile se almeno una traccia ha quello stato
+  let tracksForGame = g.tracks;
+  if (filters.stat !== 'all') {
+    tracksForGame = tracksForGame.filter(tr => statusOf(g.id, tr) === filters.stat);
+    if (tracksForGame.length === 0) return false;
   }
 
-  grid.innerHTML = list.map(t => {
-    const st = statusOf(t);
-    return `
-      <div class="card" data-status="${st}">
-        <div class="card-meta">
-          <span class="badge badge-year">${t.year}</span>
-        </div>
-        <div class="card-title">${escapeHtml(t.title)}</div>
-        <div class="card-source">da <strong>${escapeHtml(t.source)}</strong>${t.by ? ` &middot; ${escapeHtml(t.by)}` : ''}</div>
-        <div class="card-actions">
-          <select class="status-select" data-key="${escapeHtml(keyFor(t))}">
-            <option value="todo" ${st==='todo'?'selected':''}>Da fare</option>
-            <option value="wip" ${st==='wip'?'selected':''}>In corso</option>
-            <option value="done" ${st==='done'?'selected':''}>Pubblicata</option>
-          </select>
-          <a class="btn btn-yt" href="${ytSearchUrl(t)}" target="_blank" rel="noopener">YouTube</a>
-        </div>
-      </div>
-    `;
-  }).join('');
+  if (q) {
+    const inGame = `${g.title} ${g.composer || ''}`.toLowerCase().includes(q);
+    const inTrack = g.tracks.some(tr => tr.toLowerCase().includes(q));
+    if (!inGame && !inTrack) return false;
+  }
+  return true;
+}
 
-  grid.querySelectorAll('.status-select').forEach(sel => {
-    sel.addEventListener('change', e => {
-      const key = sel.dataset.key;
-      const t = TRACKS.find(x => keyFor(x) === key);
-      if (t) setStatus(t, sel.value);
-    });
-  });
+function tracksToShow(g) {
+  const q = filters.q.toLowerCase().trim();
+  let list = g.tracks;
+  if (filters.stat !== 'all') {
+    list = list.filter(tr => statusOf(g.id, tr) === filters.stat);
+  }
+  // Search: se la query matcha il nome del gioco mostriamo tutte le tracce,
+  // altrimenti solo quelle che contengono la query.
+  if (q && !`${g.title} ${g.composer || ''}`.toLowerCase().includes(q)) {
+    list = list.filter(tr => tr.toLowerCase().includes(q));
+  }
+  return list;
 }
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function render() {
+  const container = document.getElementById('games');
+  const visibleGames = GAMES.filter(gameMatches);
+
+  // ---- Stats globali ----
+  let total = 0, done = 0, wip = 0;
+  GAMES.forEach(g => {
+    g.tracks.forEach(tr => {
+      total++;
+      const s = statusOf(g.id, tr);
+      if (s === 'done') done++;
+      else if (s === 'wip') wip++;
+    });
+  });
+  const todo = total - done - wip;
+  document.getElementById('stats').innerHTML = `
+    <span class="stat"><strong>${GAMES.length}</strong> giochi</span>
+    <span class="stat"><strong>${total}</strong> brani</span>
+    <span class="stat"><strong>${todo}</strong> da fare</span>
+    <span class="stat"><strong>${wip}</strong> in corso</span>
+    <span class="stat"><strong>${done}</strong> pubblicate</span>
+  `;
+
+  if (visibleGames.length === 0) {
+    container.innerHTML = `<div class="empty"><h3>Nessun risultato</h3><p>Prova a cambiare filtri o cerca un altro titolo.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = visibleGames.map(g => {
+    const list = tracksToShow(g);
+    const gameDone = g.tracks.filter(tr => statusOf(g.id, tr) === 'done').length;
+    const gameTotal = g.tracks.length;
+    const pct = gameTotal ? Math.round(gameDone / gameTotal * 100) : 0;
+
+    const styleVars = `
+      --g-bg:${g.palette.bg};
+      --g-accent:${g.palette.accent};
+      --g-accent-2:${g.palette.accent2};
+      --g-line:${g.palette.line};
+      --g-glow:${g.palette.glow};
+    `;
+
+    const tracksHtml = list.map((tr, i) => {
+      // Il rank si basa sull'indice ORIGINALE (popolarità reale), non sulla lista filtrata
+      const originalRank = g.tracks.indexOf(tr) + 1;
+      const st = statusOf(g.id, tr);
+      return `
+        <div class="track" data-status="${st}">
+          <div class="track-row">
+            <div class="track-rank">${originalRank}</div>
+            <div class="track-title">${escapeHtml(tr)}</div>
+          </div>
+          <div class="track-actions">
+            <select class="status-select" data-game="${g.id}" data-track="${escapeHtml(tr)}">
+              <option value="todo" ${st==='todo'?'selected':''}>Da fare</option>
+              <option value="wip" ${st==='wip'?'selected':''}>In corso</option>
+              <option value="done" ${st==='done'?'selected':''}>Pubblicata</option>
+            </select>
+            <a class="btn-yt" href="${ytSearchUrl(g.title, tr, g.composer)}" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <section class="game" style="${styleVars}">
+        <div class="game-header">
+          <div class="game-titles">
+            <div class="game-title">${escapeHtml(g.title)}</div>
+            <div class="game-meta">
+              ${g.year}<span class="dot">&middot;</span>${escapeHtml(g.composer || '')}<span class="dot">&middot;</span>${gameTotal} tracce
+            </div>
+          </div>
+          <div class="game-progress">
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <span>${gameDone}/${gameTotal}</span>
+          </div>
+        </div>
+        <div class="track-grid">${tracksHtml}</div>
+      </section>
+    `;
+  }).join('');
+
+  // Bind status selects
+  container.querySelectorAll('.status-select').forEach(sel => {
+    sel.addEventListener('change', () => {
+      setStatus(sel.dataset.game, sel.dataset.track, sel.value);
+    });
+  });
 }
 
 document.querySelectorAll('#dec-filter .chip').forEach(b => {

@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0e0e10">
+<meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Cover Finder">
-<title>Cover Finder - Manuele Cover</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<title>Cover Finder - Manu Cover</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -31,19 +33,19 @@ html, body {
 body { padding-bottom: 80px; }
 
 .header {
-  background: linear-gradient(180deg, #15151a 0%, #0e0e10 100%);
-  border-bottom: 1px solid var(--line);
-  padding: 22px 20px 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f4f6 100%);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.10);
+  padding: 18px 20px 16px;
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 .header-row {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+  gap: 14px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -51,24 +53,47 @@ body { padding-bottom: 80px; }
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.5px;
+  color: #1a1a1a;
 }
 .logo .accent { color: var(--red); }
-.tag {
-  font-size: 12px;
-  color: var(--text-dim);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  display: block;
+  object-fit: contain;
+}
+.brand-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.2px;
+  line-height: 1.1;
+}
+.brand-text small {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #8a8a93;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
+  margin-top: 2px;
 }
 .stats {
   max-width: 1200px;
-  margin: 14px auto 0;
+  margin: 12px auto 0;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   font-size: 13px;
 }
-.stat { color: var(--text-dim); }
-.stat strong { color: var(--text); font-weight: 700; }
+.stat { color: #6b6b73; }
+.stat strong { color: #1a1a1a; font-weight: 700; }
 
 .controls {
   max-width: 1200px;
@@ -327,9 +352,11 @@ body { padding-bottom: 80px; }
 .empty h3 { color: var(--text); margin-bottom: 8px; font-size: 18px; }
 
 @media (max-width: 600px) {
-  .header { padding: 16px 16px 14px; }
-  .logo { font-size: 19px; }
-  .tag { font-size: 10px; }
+  .header { padding: 14px 16px 12px; }
+  .logo { font-size: 18px; }
+  .brand-logo { width: 32px; height: 32px; }
+  .brand-text { font-size: 13px; }
+  .brand-text small { font-size: 9px; letter-spacing: 1px; }
   .controls { padding: 14px 16px 4px; }
   .games { padding: 14px 16px; gap: 16px; }
   .game { padding: 16px; }
@@ -345,7 +372,10 @@ body { padding-bottom: 80px; }
 <div class="header">
   <div class="header-row">
     <div class="logo">Cover<span class="accent">Finder</span></div>
-    <div class="tag">Videogiochi &middot; Manuele Cover</div>
+    <div class="brand">
+      <span class="brand-text">Manu Cover<small>Cover archive</small></span>
+      <img class="brand-logo" src="assets/logo.png" alt="Manu Cover">
+    </div>
   </div>
   <div class="stats" id="stats"></div>
 </div>
